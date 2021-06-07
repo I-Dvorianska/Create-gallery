@@ -38,4 +38,8 @@ function onImageClick(e) {
 
   const getOriginalUrl = e.target.dataset.source;
   console.log(getOriginalUrl);
+
+  lboxContainerEl.classList.add("is-open");
+  lboxImage.src = e.target.dataset.source;
+  lboxImage.alt = e.target.getAttribute("alt");
 }
