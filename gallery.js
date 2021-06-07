@@ -1,12 +1,14 @@
 import galleryItems from "./gallery-items.js";
 
-const galleryListEl = document.querySelector(".gallery");
+const galleryListEl = document.querySelector(".js-gallery");
 const lboxContainerEl = document.querySelector(".lightbox");
 const overlayEl = document.querySelector(".lightbox__overlay");
 const lboxContentEl = document.querySelector(".lightbox__content");
 const lboxImage = document.querySelector(".lightbox__image");
 const closeModalBtn = document.querySelector(".lightbox__button");
+
 const imagesMarkup = createGallery(galleryItems);
+galleryListEl.addEventListener("click", onImageClick);
 
 function createGallery(galleryItems) {
   return galleryItems
@@ -21,10 +23,19 @@ function createGallery(galleryItems) {
               class="gallery__image"
               src=${preview}
               data-source=${original}
-              alt=${description} />
+              alt='${description}' />
           </a>
           </li>`;
     })
     .join("");
 }
 galleryListEl.insertAdjacentHTML("beforeend", imagesMarkup);
+
+function onImageClick(e) {
+  if (!e.target.classList.contains("gallery__image")) {
+    return;
+  }
+
+  const getOriginalUrl = e.target.dataset.source;
+  console.log(getOriginalUrl);
+}
