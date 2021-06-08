@@ -9,6 +9,8 @@ const closeModalBtn = document.querySelector(".lightbox__button");
 
 const imagesMarkup = createGallery(galleryItems);
 galleryListEl.addEventListener("click", onImageClick);
+closeModalBtn.addEventListener("click", closeModalWithClick);
+overlayEl.addEventListener("click", onOverlayClick);
 
 function createGallery(galleryItems) {
   return galleryItems
@@ -32,14 +34,26 @@ function createGallery(galleryItems) {
 galleryListEl.insertAdjacentHTML("beforeend", imagesMarkup);
 
 function onImageClick(e) {
+  e.preventDefault();
+
   if (!e.target.classList.contains("gallery__image")) {
     return;
   }
 
   const getOriginalUrl = e.target.dataset.source;
-  console.log(getOriginalUrl);
 
   lboxContainerEl.classList.add("is-open");
-  lboxImage.src = e.target.dataset.source;
+  lboxImage.src = getOriginalUrl;
   lboxImage.alt = e.target.getAttribute("alt");
+}
+
+function closeModalWithClick(e) {
+  lboxContainerEl.classList.remove("is-open");
+
+  lboxImage.src = "";
+  lboxImage.alt = "";
+}
+
+function onOverlayClick(e) {
+  closeModalWithClick();
 }
