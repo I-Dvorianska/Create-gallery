@@ -33,6 +33,11 @@ function createGallery(galleryItems) {
 }
 galleryListEl.insertAdjacentHTML("beforeend", imagesMarkup);
 
+function imageInfoWithModalState(src, alt) {
+  lboxImage.src = src;
+  lboxImage.alt = alt;
+}
+
 function onImageClick(e) {
   e.preventDefault();
 
@@ -43,17 +48,20 @@ function onImageClick(e) {
   const getOriginalUrl = e.target.dataset.source;
 
   lboxContainerEl.classList.add("is-open");
-  lboxImage.src = getOriginalUrl;
-  lboxImage.alt = e.target.getAttribute("alt");
+  imageInfoWithModalState(getOriginalUrl, e.target.getAttribute("alt"));
+  window.addEventListener("keydown", onEscKeyPress);
 }
 
 function closeModalWithClick(e) {
   lboxContainerEl.classList.remove("is-open");
 
-  lboxImage.src = "";
-  lboxImage.alt = "";
+  imageInfoWithModalState("", "");
 }
 
 function onOverlayClick(e) {
+  closeModalWithClick();
+}
+
+function onEscKeyPress(e) {
   closeModalWithClick();
 }
